@@ -1,0 +1,20 @@
+version: '3'
+services:
+  php:
+    build:
+      context: ./../
+      dockerfile: ./docker/php/Dockerfile
+      args:
+        - PUID=${PUID}
+        - PGID=${PGID}
+        - UNAME=${UNAME}
+        - APP_ENV=${APP_ENV}
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+    ports:
+      - "8080:8080"
+    environment:
+      PHP_IDE_CONFIG: "serverName=loyalty-program.local"
+      XDEBUG_SESSION: PHPSTORM
+    volumes:
+      - ./../:/app
+    command: ["bin/rr", "serve", "-c", ".rr.dev.yaml"]
